@@ -1,4 +1,6 @@
-﻿namespace Botvex.DB.Models.Beatmap;
+﻿using Botvex.DB.Models.Beatmapset;
+
+namespace Botvex.DB.Models.Beatmap;
 
 public class Beatmap
 {
@@ -10,8 +12,8 @@ public class Beatmap
     public int Total_Length { get; set; }
     public int User_Id { get; set; }
     public string Version { get; set; }
-    // public BeatmapsetExtended Beatmapset { get; set; }
+    public BeatmapsetExtended Beatmapset { get; set; }
     public string? Checksum { get; set; }
-    public Failtimes Failtimes { get; set; }
+    public Failtime Failtimes { get; set; }
     public int Max_combo { get; set; }
 }

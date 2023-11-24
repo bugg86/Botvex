@@ -1,8 +1,6 @@
 ﻿namespace Botvex.DB.Models.Beatmapset;
 
-public class Genre
+public class Current_user_attribute
 {
     public int? Beatmapset_id { get; set; }
-    public int Id;
-    public string Name;
 }

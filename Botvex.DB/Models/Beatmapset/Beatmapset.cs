@@ -25,7 +25,7 @@ public class Beatmapset
     public List<BeatmapExtended>? Beatmaps { get; set; }
     public List<BeatmapExtended>? Converts { get; set; }
     public List<Nomination>? Current_nomination { get; set; }
-    public List<dynamic>? Current_user_attributes { get; set; }
+    public List<Current_user_attribute>? Current_user_attributes { get; set; }
     public Description? Description { get; set; }
     public bool? Has_favourited { get; set; }
     public Genre? Genre { get; set; }
