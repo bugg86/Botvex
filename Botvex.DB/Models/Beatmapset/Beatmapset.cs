@@ -1,5 +1,6 @@
 ﻿using Botvex.DB.Models.Beatmap;
 using Botvex.DB.Models.User;
+using Convert = Botvex.DB.Models.Beatmap.Convert;
 
 namespace Botvex.DB.Models.Beatmapset;
 
@@ -23,15 +24,11 @@ public class Beatmapset
     public int User_id { get; set; }
     public bool Video { get; set; }
     public List<BeatmapExtended>? Beatmaps { get; set; }
-    public List<BeatmapExtended>? Converts { get; set; }
-    public List<Nomination>? Current_nomination { get; set; }
-    public List<Current_user_attribute>? Current_user_attributes { get; set; }
-    public Description? Description { get; set; }
+    public List<Convert>? Converts { get; set; }
+    // public string? Description { get; set; }
     public bool? Has_favourited { get; set; }
     public Genre? Genre { get; set; }
     public Language? Language { get; set; }
-    public List<string>? Pack_tags { get; set; }
-    public List<int>? Ratings { get; set; }
     public List<UserExtended> Related_users { get; set; }
     public UserExtended User { get; set; }
     public int Track_id { get; set; }

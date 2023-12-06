@@ -14,6 +14,5 @@ public class Beatmap
     public string Version { get; set; }
     public BeatmapsetExtended Beatmapset { get; set; }
     public string? Checksum { get; set; }
-    public Failtime Failtimes { get; set; }
     public int Max_combo { get; set; }
 }

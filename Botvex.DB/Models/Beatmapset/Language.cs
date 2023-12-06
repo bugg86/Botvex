@@ -2,7 +2,8 @@
 
 public class Language
 {
-    public int? Beatmapset_id { get; set; }
-    public int Id;
-    public string Name;
+    public BeatmapsetExtended Beatmapset { get; set; }
+    public int? Beatmapset_Id { get; set; }
+    public int Id { get; set; }
+    public string Name { get; set; }
 }

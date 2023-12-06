@@ -2,7 +2,7 @@
 
 namespace Botvex.DB.Repositories.Interfaces;
 
-public interface IRepository<T> where T : class
+public interface IRepository<T>
 {
     T Add(T entity);
     List<T> AddRange(List<T> entities);
