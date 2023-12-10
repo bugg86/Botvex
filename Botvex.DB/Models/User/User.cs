@@ -1,4 +1,7 @@
-﻿namespace Botvex.DB.Models.User;
+﻿using Botvex.DB.Models.Beatmap;
+using Botvex.DB.Models.Beatmapset;
+
+namespace Botvex.DB.Models.User;
 
 public class User
 {
@@ -15,4 +18,6 @@ public class User
     public bool Pm_friends_only { get; set; }
     public string? Profile_colour { get; set; }
     public string Username { get; set; }
+    public IEnumerable<Beatmap.Beatmap>? Beatmaps { get; set; }
+    public IEnumerable<Beatmapset.Beatmapset> Beatmapsets { get; set; }
 }

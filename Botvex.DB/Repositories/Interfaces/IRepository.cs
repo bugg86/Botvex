@@ -10,9 +10,11 @@ public interface IRepository<T>
     IQueryable<T> GetAllNoTracking();
     T? GetSingle(Expression<Func<T, bool>> predicate);
     T? GetSingleNoTracking(Expression<Func<T, bool>> predicate);
+    IQueryable<T> GetByCondition(Expression<Func<T, bool>> predicate);
     T? GetSingle(params object?[]? keyValues);
     IQueryable<T> GetMany(Expression<Func<T, bool>> predicate);
     public T Update(T entity, T oldEntity);
     T Remove(T entity);
     int SaveChanges();
+    Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

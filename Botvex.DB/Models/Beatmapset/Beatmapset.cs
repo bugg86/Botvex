@@ -23,13 +23,13 @@ public class Beatmapset
     public string Title_unicode { get; set; }
     public int User_id { get; set; }
     public bool Video { get; set; }
-    public List<BeatmapExtended>? Beatmaps { get; set; }
-    public List<Convert>? Converts { get; set; }
+    public IEnumerable<Beatmap.Beatmap>? Beatmaps { get; set; }
+    public IEnumerable<Convert>? Converts { get; set; }
     // public string? Description { get; set; }
     public bool? Has_favourited { get; set; }
     public Genre? Genre { get; set; }
     public Language? Language { get; set; }
-    public List<UserExtended> Related_users { get; set; }
-    public UserExtended User { get; set; }
+    public IEnumerable<User.User> Related_users { get; set; }
+    public User.User User { get; set; }
     public int Track_id { get; set; }
 }

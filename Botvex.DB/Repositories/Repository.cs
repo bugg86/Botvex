@@ -29,6 +29,11 @@ public abstract class Repository<T> : IRepository<T> where T : class
         return _botvexContext.Set<T>().FirstOrDefault(predicate);
     }
 
+    public IQueryable<T> GetByCondition(Expression<Func<T, bool>> predicate)
+    {
+        return _botvexContext.Set<T>().Where(predicate).AsNoTracking();
+    }
+
     public IQueryable<T> GetMany(Expression<Func<T, bool>> predicate)
     {
         return _botvexContext.Set<T>().Where(predicate);
@@ -61,5 +66,10 @@ public abstract class Repository<T> : IRepository<T> where T : class
     public int SaveChanges()
     {
         return _botvexContext.SaveChanges();
+    }
+
+    public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    {
+        return _botvexContext.SaveChangesAsync(cancellationToken);
     }
 }

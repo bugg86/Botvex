@@ -10,5 +10,6 @@ public interface IBotvexContext
     public EntityEntry<T> Update<T>(T entity) where T : class;
     public EntityEntry<T> Remove<T>(T entity) where T : class;
     public int SaveChanges();
+    public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     public void AddRange(IEnumerable<object> entities);
 }
