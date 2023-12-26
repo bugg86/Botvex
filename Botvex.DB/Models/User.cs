@@ -1,12 +1,9 @@
-﻿using Botvex.DB.Models.Beatmap;
-using Botvex.DB.Models.Beatmapset;
-
-namespace Botvex.DB.Models.User;
+﻿namespace Botvex.DB.Models;
 
 public class User
 {
-    public string Avatar_url { get; set; }
-    public string Country_code { get; set; }
+    public string? Avatar_url { get; set; }
+    public string? Country_code { get; set; }
     public string? Default_group { get; set; }
     public int Id { get; set; }
     public bool Is_active { get; set; }
@@ -17,7 +14,7 @@ public class User
     public string? Last_visit { get; set; }
     public bool Pm_friends_only { get; set; }
     public string? Profile_colour { get; set; }
-    public string Username { get; set; }
-    public IEnumerable<Beatmap.Beatmap>? Beatmaps { get; set; }
-    public IEnumerable<Beatmapset.Beatmapset> Beatmapsets { get; set; }
+    public string? Username { get; set; }
+    public IEnumerable<Beatmap>? Beatmaps { get; set; }
+    public IEnumerable<Beatmapset>? Beatmapsets { get; set; }
 }

@@ -1,9 +1,8 @@
-﻿using Botvex.DB.Models.Beatmapset;
-using Botvex.DB.Repositories.Interfaces;
+﻿using Botvex.DB.Repositories.Interfaces;
 
 namespace Botvex.DB.Repositories.Beatmapset.Interfaces;
 
-public interface IBeatmapsetRepository : IRepository<BeatmapsetExtended>
+public interface IBeatmapsetRepository : IRepository<Models.Beatmapset>
 {
     
 }

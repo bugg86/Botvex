@@ -2,7 +2,7 @@
 
 namespace Botvex.DB.Repositories.Beatmap.Interfaces;
 
-public interface IBeatmapRepository : IRepository<Models.Beatmap.Beatmap>
+public interface IBeatmapRepository : IRepository<Models.Beatmap>
 {
     
 }

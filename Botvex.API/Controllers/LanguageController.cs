@@ -1,4 +1,4 @@
-﻿using Botvex.DB.Models.Beatmapset;
+﻿using Botvex.DB.Models;
 using Botvex.DB.Repositories.Beatmapset.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 

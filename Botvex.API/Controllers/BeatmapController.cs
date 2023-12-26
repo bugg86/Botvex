@@ -1,7 +1,10 @@
+using Botvex.DB.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Botvex.DB.Models.Beatmap;
 using Botvex.DB.Repositories.Beatmap.Interfaces;
+using Botvex.DB.Repositories.Beatmapset.Interfaces;
+using Botvex.DB.Repositories.User.Interfaces;
+using Microsoft.Identity.Client;
 
 namespace Botvex.osu.Controllers
 {
@@ -10,10 +13,14 @@ namespace Botvex.osu.Controllers
     public class BeatmapController : ControllerBase
     {
         private readonly IBeatmapRepository _beatmapRepository;
+        private readonly IUserRepository _userRepository;
+        private readonly IBeatmapsetRepository _beatmapsetRepository;
 
-        public BeatmapController(IBeatmapRepository beatmapRepository)
+        public BeatmapController(IBeatmapRepository beatmapRepository, IUserRepository userRepository, IBeatmapsetRepository beatmapsetRepository)
         {
             _beatmapRepository = beatmapRepository;
+            _userRepository = userRepository;
+            _beatmapsetRepository = beatmapsetRepository;
         }
 
         // GET: api/Beatmap
@@ -81,6 +88,7 @@ namespace Botvex.osu.Controllers
         [HttpPost]
         public async Task<ActionResult<Beatmap>> PostBeatmap(Beatmap beatmap)
         {
+            await PreprocessBeatmap(beatmap);
             _beatmapRepository.Add(beatmap);
             
             try
@@ -118,6 +126,89 @@ namespace Botvex.osu.Controllers
             await _beatmapRepository.SaveChangesAsync();
 
             return NoContent();
+        }
+
+        private async Task PreprocessBeatmap(Beatmap beatmap)
+        {
+            await UpdateUser(beatmap.User_Id);
+            await UpdateBeatmapset(beatmap.Beatmapset);
+        }
+
+        private async Task UpdateUser(int id)
+        {
+            var oldUser = await _userRepository.GetByCondition(e => e.Id == id).FirstOrDefaultAsync();
+            
+            //Todo: replace this with a http request to osu to get the actual user.
+            var temp = new User
+            {
+                Id = 9331411,
+                Is_active = true,
+                Is_bot = false,
+                Is_deleted = false,
+                Is_online = false,
+                Is_supporter = false
+            };
+            
+            if (oldUser == null)
+            {
+                _userRepository.Add(temp);
+            }
+            else
+            {
+                _userRepository.Update(temp, oldUser);
+            }
+            
+            try
+            {
+                await _userRepository.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (_userRepository.GetSingle(e => e.Id == id) is null)
+                {
+                    NotFound();
+                    return;
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            NoContent();
+        }
+
+        private async Task UpdateBeatmapset(Beatmapset beatmapset)
+        {
+            var oldBeatmapset = await _beatmapsetRepository.GetByCondition(e => e.Id == beatmapset.Id).FirstOrDefaultAsync();
+            
+            if (oldBeatmapset == null)
+            {
+                _beatmapsetRepository.Add(beatmapset);
+            }
+            else
+            {
+                _beatmapsetRepository.Update(beatmapset, oldBeatmapset);
+            }
+            
+            try
+            {
+                await _beatmapsetRepository.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (_beatmapsetRepository.GetSingle(e => e.Id == beatmapset.Id) is null)
+                {
+                    NotFound();
+                    return;
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            NoContent();
         }
     }
 }

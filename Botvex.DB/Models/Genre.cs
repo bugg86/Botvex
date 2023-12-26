@@ -1,8 +1,8 @@
-﻿namespace Botvex.DB.Models.Beatmapset;
+﻿namespace Botvex.DB.Models;
 
 public class Genre
 {
-    public BeatmapsetExtended Beatmapset { get; set; }
+    public Beatmapset Beatmapset { get; set; }
     public int? Beatmapset_Id { get; set; }
     public int Id { get; set; }
     public string Name { get; set; }

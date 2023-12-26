@@ -1,13 +1,11 @@
 ﻿using Botvex.DB.Contexts.Interfaces;
-using Botvex.DB.Models.Beatmap;
-using Botvex.DB.Models.Beatmapset;
-using Botvex.DB.Models.User;
+using Botvex.DB.Models;
 using Botvex.DB.Repositories.Beatmapset;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Configuration;
-using Convert = Botvex.DB.Models.Beatmap.Convert;
+using Convert = Botvex.DB.Models.Convert;
 
 namespace Botvex.DB.Contexts;
 
@@ -43,60 +41,20 @@ public partial class BotvexContext : DbContext, IBotvexContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Beatmap>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PK_BeatmapId");
-            entity.Property(e => e.Id).ValueGeneratedNever();
-            
-            entity.ToTable("beatmaps");
-            
-            entity.Property(e => e.Difficulty_Rating).HasColumnType("float");
-            entity.Property(e => e.Mode).HasMaxLength(25);
-            entity.Property(e => e.Status).HasMaxLength(100);
-            entity.Property(e => e.Total_Length).HasColumnType("int");
-            entity.Property(e => e.User_Id).HasColumnType("int");
-            entity.Property(e => e.Version).HasMaxLength(100);
-            entity.HasOne(be => be.User)
-                .WithMany(u => u.Beatmaps)
-                .HasForeignKey(be => be.User_Id)
-                .HasConstraintName("FK_UserToBeatmap")
-                .OnDelete(DeleteBehavior.NoAction);
-            entity.Property(e => e.User_Id).HasColumnType("int");
-            entity.HasOne(be => be.Beatmapset)
-                .WithMany(bse => bse.Beatmaps)
-                .HasForeignKey(be => be.Beatmapset_Id)
-                .HasConstraintName("FK_BeatmapToSet");
-            entity.Property(e => e.Checksum).HasMaxLength(100);
-            entity.Property(e => e.Max_combo).HasColumnType("int");
-            entity.Property(e => e.Accuracy).HasColumnType("float");
-            entity.Property(e => e.Ar).HasColumnType("float");
-            entity.Property(e => e.Convert).HasConversion<int>();
-            entity.Property(e => e.Count_circles).HasColumnType("int");
-            entity.Property(e => e.Count_sliders).HasColumnType("int");
-            entity.Property(e => e.Count_spinners).HasColumnType("int");
-            entity.Property(e => e.Cs).HasColumnType("float");
-            entity.Property(e => e.Deleted_at).HasMaxLength(100);
-            entity.Property(e => e.Drain).HasColumnType("float");
-            entity.Property(e => e.Hit_length).HasColumnType("int");
-            entity.Property(e => e.Is_scoreable).HasConversion<int>();
-            entity.Property(e => e.Last_updated).HasMaxLength(100);
-            entity.Property(e => e.Mode_int).HasColumnType("int");
-            entity.Property(e => e.Passcount).HasColumnType("int");
-            entity.Property(e => e.Playcount).HasColumnType("int");
-            entity.Property(e => e.Ranked).HasMaxLength(100);
-            entity.Property(e => e.Url).HasMaxLength(100);
-        });
+        modelBuilder.Ignore<Convert>();
 
         modelBuilder.Entity<Beatmapset>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK_BeatmapsetId");
+            entity.HasKey(e => e.Id).HasName("PK_Beatmapset_Id");
             entity.Property(e => e.Id).ValueGeneratedNever();
+            
+            entity.Ignore(e => e.Beatmaps);
 
             entity.ToTable("beatmapsets");
 
             entity.Property(e => e.Artist).HasMaxLength(100);
             entity.Property(e => e.Artist_unicode).HasMaxLength(100);
-            entity.Property(e => e.Covers).HasMaxLength(100);
+            // entity.Property(e => e.Covers).HasMaxLength(100);
             entity.Property(e => e.Creator).HasMaxLength(100);
             entity.Property(e => e.Favourite_count).HasColumnType("int");
             entity.Property(e => e.Nsfw).HasConversion<int>();
@@ -117,6 +75,52 @@ public partial class BotvexContext : DbContext, IBotvexContext
             entity.Property(e => e.Video).HasConversion<int>();
             entity.Property(e => e.Has_favourited).HasConversion<int>();
             entity.Property(e => e.Track_id).HasColumnType("int");
+        });
+        
+        modelBuilder.Entity<Beatmap>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK_BeatmapId");
+            entity.Property(e => e.Id).ValueGeneratedNever();
+            
+            entity.ToTable("beatmaps");
+            
+            entity.Property(e => e.Difficulty_Rating).HasColumnType("float");
+            entity.Property(e => e.Mode).HasMaxLength(25);
+            entity.Property(e => e.Status).HasMaxLength(100);
+            entity.Property(e => e.Total_Length).HasColumnType("int");
+            entity.Property(e => e.User_Id).HasColumnType("int");
+            entity.Property(e => e.Version).HasMaxLength(100);
+            entity.HasOne(be => be.User)
+                .WithMany(u => u.Beatmaps)
+                .HasForeignKey(be => be.User_Id)
+                .HasConstraintName("FK_UserToBeatmap")
+                .OnDelete(DeleteBehavior.NoAction);
+            entity.Property(e => e.User_Id).HasColumnType("int");
+            entity.Property(e => e.Beatmapset_Id).HasColumnType("int");
+            entity.HasOne(be => be.Beatmapset)
+                .WithMany(bse => bse.Beatmaps)
+                .HasForeignKey(be => be.Beatmapset_Id)
+                .HasConstraintName("FK_BeatmapToSet")
+                .OnDelete(DeleteBehavior.NoAction);
+            entity.Property(e => e.Checksum).HasMaxLength(100);
+            entity.Property(e => e.Max_combo).HasColumnType("int");
+            entity.Property(e => e.Accuracy).HasColumnType("float");
+            entity.Property(e => e.Ar).HasColumnType("float");
+            entity.Property(e => e.Convert).HasConversion<int>();
+            entity.Property(e => e.Count_circles).HasColumnType("int");
+            entity.Property(e => e.Count_sliders).HasColumnType("int");
+            entity.Property(e => e.Count_spinners).HasColumnType("int");
+            entity.Property(e => e.Cs).HasColumnType("float");
+            entity.Property(e => e.Deleted_at).HasMaxLength(100);
+            entity.Property(e => e.Drain).HasColumnType("float");
+            entity.Property(e => e.Hit_length).HasColumnType("int");
+            entity.Property(e => e.Is_scoreable).HasConversion<int>();
+            entity.Property(e => e.Last_updated).HasMaxLength(100);
+            entity.Property(e => e.Mode_int).HasColumnType("int");
+            entity.Property(e => e.Passcount).HasColumnType("int");
+            entity.Property(e => e.Playcount).HasColumnType("int");
+            entity.Property(e => e.Ranked).HasMaxLength(100);
+            entity.Property(e => e.Url).HasMaxLength(100);
         });
 
         modelBuilder.Entity<Genre>(entity =>

@@ -22,18 +22,18 @@ namespace Botvex.DB.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Botvex.DB.Models.Beatmap.BeatmapExtended", b =>
+            modelBuilder.Entity("Botvex.DB.Models.Beatmap", b =>
                 {
                     b.Property<int>("Id")
                         .HasColumnType("int");
 
-                    b.Property<double>("Accuracy")
+                    b.Property<double?>("Accuracy")
                         .HasColumnType("float");
 
-                    b.Property<double>("Ar")
+                    b.Property<double?>("Ar")
                         .HasColumnType("float");
 
-                    b.Property<int>("Beatmapset_Id")
+                    b.Property<int?>("Beatmapset_Id")
                         .HasColumnType("int");
 
                     b.Property<float?>("Bpm")
@@ -46,16 +46,16 @@ namespace Botvex.DB.Migrations
                     b.Property<int>("Convert")
                         .HasColumnType("int");
 
-                    b.Property<int>("Count_circles")
+                    b.Property<int?>("Count_circles")
                         .HasColumnType("int");
 
-                    b.Property<int>("Count_sliders")
+                    b.Property<int?>("Count_sliders")
                         .HasColumnType("int");
 
-                    b.Property<int>("Count_spinners")
+                    b.Property<int?>("Count_spinners")
                         .HasColumnType("int");
 
-                    b.Property<double>("Cs")
+                    b.Property<double?>("Cs")
                         .HasColumnType("float");
 
                     b.Property<string>("Deleted_at")
@@ -65,51 +65,44 @@ namespace Botvex.DB.Migrations
                     b.Property<double>("Difficulty_Rating")
                         .HasColumnType("float");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("Drain")
+                    b.Property<double?>("Drain")
                         .HasColumnType("float");
 
-                    b.Property<int>("Hit_length")
+                    b.Property<int?>("Hit_length")
                         .HasColumnType("int");
 
                     b.Property<int>("Is_scoreable")
                         .HasColumnType("int");
 
                     b.Property<string>("Last_updated")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int>("Max_combo")
+                    b.Property<int?>("Max_combo")
                         .HasColumnType("int");
 
                     b.Property<string>("Mode")
-                        .IsRequired()
                         .HasMaxLength(25)
                         .HasColumnType("nvarchar(25)");
 
-                    b.Property<int>("Mode_int")
+                    b.Property<int?>("Mode_int")
                         .HasColumnType("int");
 
-                    b.Property<int>("Passcount")
+                    b.Property<int?>("Passcount")
                         .HasColumnType("int");
 
-                    b.Property<int>("Playcount")
+                    b.Property<int?>("Playcount")
                         .HasColumnType("int");
 
-                    b.Property<int>("Ranked")
+                    b.Property<int?>("Ranked")
                         .HasMaxLength(100)
                         .HasColumnType("int");
 
                     b.Property<string>("Status")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int>("Total_Length")
+                    b.Property<int?>("Total_Length")
                         .HasColumnType("int");
 
                     b.Property<string>("Url")
@@ -121,7 +114,6 @@ namespace Botvex.DB.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Version")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -133,13 +125,9 @@ namespace Botvex.DB.Migrations
                     b.HasIndex("User_Id");
 
                     b.ToTable("beatmaps", (string)null);
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("BeatmapExtended");
-
-                    b.UseTphMappingStrategy();
                 });
 
-            modelBuilder.Entity("Botvex.DB.Models.Beatmapset.BeatmapsetExtended", b =>
+            modelBuilder.Entity("Botvex.DB.Models.Beatmapset", b =>
                 {
                     b.Property<int>("Id")
                         .HasColumnType("int");
@@ -154,31 +142,10 @@ namespace Botvex.DB.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<float>("Bpm")
-                        .HasColumnType("real");
-
-                    b.Property<bool>("Can_be_hyped")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Covers")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
                     b.Property<string>("Creator")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("Deleted_at")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool?>("Discussion_enabled")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Discussion_locked")
-                        .HasColumnType("bit");
 
                     b.Property<int>("Favourite_count")
                         .HasColumnType("int");
@@ -186,38 +153,20 @@ namespace Botvex.DB.Migrations
                     b.Property<int?>("Has_favourited")
                         .HasColumnType("int");
 
-                    b.Property<bool>("Is_scoreable")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Last_updated")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Legacy_thread_url")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("Nsfw")
                         .HasColumnType("int");
 
-                    b.Property<int>("Offset")
+                    b.Property<int?>("Offset")
                         .HasColumnType("int");
 
-                    b.Property<int>("Play_count")
+                    b.Property<int?>("Play_count")
                         .HasColumnType("int");
 
                     b.Property<string>("Preview_url")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int>("Ranked")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Ranked_date")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Source")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -225,31 +174,18 @@ namespace Botvex.DB.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Status")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<bool>("Storyboard")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Submitted_date")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Tags")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Title")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Title_unicode")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int>("Track_id")
+                    b.Property<int?>("Track_id")
                         .HasColumnType("int");
 
                     b.Property<int>("User_id")
@@ -259,14 +195,14 @@ namespace Botvex.DB.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id")
-                        .HasName("PK_BeatmapsetId");
+                        .HasName("PK_Beatmapset_Id");
 
                     b.HasIndex("User_id");
 
                     b.ToTable("beatmapsets", (string)null);
                 });
 
-            modelBuilder.Entity("Botvex.DB.Models.Beatmapset.Genre", b =>
+            modelBuilder.Entity("Botvex.DB.Models.Genre", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -292,7 +228,7 @@ namespace Botvex.DB.Migrations
                     b.ToTable("genres", (string)null);
                 });
 
-            modelBuilder.Entity("Botvex.DB.Models.Beatmapset.Language", b =>
+            modelBuilder.Entity("Botvex.DB.Models.Language", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -318,21 +254,16 @@ namespace Botvex.DB.Migrations
                     b.ToTable("languages", (string)null);
                 });
 
-            modelBuilder.Entity("Botvex.DB.Models.User.UserExtended", b =>
+            modelBuilder.Entity("Botvex.DB.Models.User", b =>
                 {
                     b.Property<int>("Id")
                         .HasColumnType("int");
 
                     b.Property<string>("Avatar_url")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int?>("BeatmapsetExtendedId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Country_code")
-                        .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
@@ -367,40 +298,24 @@ namespace Botvex.DB.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Username")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id")
                         .HasName("PK_UserId");
 
-                    b.HasIndex("BeatmapsetExtendedId");
-
                     b.ToTable("users", (string)null);
                 });
 
-            modelBuilder.Entity("Botvex.DB.Models.Beatmap.Convert", b =>
+            modelBuilder.Entity("Botvex.DB.Models.Beatmap", b =>
                 {
-                    b.HasBaseType("Botvex.DB.Models.Beatmap.BeatmapExtended");
-
-                    b.Property<int?>("BeatmapsetExtendedId")
-                        .HasColumnType("int");
-
-                    b.HasIndex("BeatmapsetExtendedId");
-
-                    b.HasDiscriminator().HasValue("Convert");
-                });
-
-            modelBuilder.Entity("Botvex.DB.Models.Beatmap.BeatmapExtended", b =>
-                {
-                    b.HasOne("Botvex.DB.Models.Beatmapset.BeatmapsetExtended", "Beatmapset")
+                    b.HasOne("Botvex.DB.Models.Beatmapset", "Beatmapset")
                         .WithMany("Beatmaps")
                         .HasForeignKey("Beatmapset_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
+                        .OnDelete(DeleteBehavior.NoAction)
                         .HasConstraintName("FK_BeatmapToSet");
 
-                    b.HasOne("Botvex.DB.Models.User.UserExtended", "User")
+                    b.HasOne("Botvex.DB.Models.User", "User")
                         .WithMany("Beatmaps")
                         .HasForeignKey("User_Id")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -412,9 +327,9 @@ namespace Botvex.DB.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Botvex.DB.Models.Beatmapset.BeatmapsetExtended", b =>
+            modelBuilder.Entity("Botvex.DB.Models.Beatmapset", b =>
                 {
-                    b.HasOne("Botvex.DB.Models.User.UserExtended", "User")
+                    b.HasOne("Botvex.DB.Models.User", "User")
                         .WithMany("Beatmapsets")
                         .HasForeignKey("User_id")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -424,54 +339,36 @@ namespace Botvex.DB.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Botvex.DB.Models.Beatmapset.Genre", b =>
+            modelBuilder.Entity("Botvex.DB.Models.Genre", b =>
                 {
-                    b.HasOne("Botvex.DB.Models.Beatmapset.BeatmapsetExtended", "Beatmapset")
+                    b.HasOne("Botvex.DB.Models.Beatmapset", "Beatmapset")
                         .WithOne("Genre")
-                        .HasForeignKey("Botvex.DB.Models.Beatmapset.Genre", "Beatmapset_Id")
+                        .HasForeignKey("Botvex.DB.Models.Genre", "Beatmapset_Id")
                         .HasConstraintName("FK_GenreToSet");
 
                     b.Navigation("Beatmapset");
                 });
 
-            modelBuilder.Entity("Botvex.DB.Models.Beatmapset.Language", b =>
+            modelBuilder.Entity("Botvex.DB.Models.Language", b =>
                 {
-                    b.HasOne("Botvex.DB.Models.Beatmapset.BeatmapsetExtended", "Beatmapset")
+                    b.HasOne("Botvex.DB.Models.Beatmapset", "Beatmapset")
                         .WithOne("Language")
-                        .HasForeignKey("Botvex.DB.Models.Beatmapset.Language", "Beatmapset_Id")
+                        .HasForeignKey("Botvex.DB.Models.Language", "Beatmapset_Id")
                         .HasConstraintName("FK_LanguageToSet");
 
                     b.Navigation("Beatmapset");
                 });
 
-            modelBuilder.Entity("Botvex.DB.Models.User.UserExtended", b =>
-                {
-                    b.HasOne("Botvex.DB.Models.Beatmapset.BeatmapsetExtended", null)
-                        .WithMany("Related_users")
-                        .HasForeignKey("BeatmapsetExtendedId");
-                });
-
-            modelBuilder.Entity("Botvex.DB.Models.Beatmap.Convert", b =>
-                {
-                    b.HasOne("Botvex.DB.Models.Beatmapset.BeatmapsetExtended", null)
-                        .WithMany("Converts")
-                        .HasForeignKey("BeatmapsetExtendedId");
-                });
-
-            modelBuilder.Entity("Botvex.DB.Models.Beatmapset.BeatmapsetExtended", b =>
+            modelBuilder.Entity("Botvex.DB.Models.Beatmapset", b =>
                 {
                     b.Navigation("Beatmaps");
-
-                    b.Navigation("Converts");
 
                     b.Navigation("Genre");
 
                     b.Navigation("Language");
-
-                    b.Navigation("Related_users");
                 });
 
-            modelBuilder.Entity("Botvex.DB.Models.User.UserExtended", b =>
+            modelBuilder.Entity("Botvex.DB.Models.User", b =>
                 {
                     b.Navigation("Beatmaps");
 

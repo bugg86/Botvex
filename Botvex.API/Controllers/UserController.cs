@@ -1,4 +1,4 @@
-﻿using Botvex.DB.Models.User;
+﻿using Botvex.DB.Models;
 using Botvex.DB.Repositories.User.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
