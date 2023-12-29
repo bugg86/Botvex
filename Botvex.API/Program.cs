@@ -6,6 +6,8 @@ using Botvex.DB.Repositories.Beatmapset;
 using Botvex.DB.Repositories.Beatmapset.Interfaces;
 using Botvex.DB.Repositories.User;
 using Botvex.DB.Repositories.User.Interfaces;
+using Botvex.osu.Services;
+using Botvex.osu.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace Botvex.osu;
@@ -62,6 +64,9 @@ public class Program
         services.AddScoped<IBeatmapsetRepository, BeatmapsetRepository>();
         services.AddScoped<IGenreRepository, GenreRepository>();
         services.AddScoped<ILanguageRepository, LanguageRepository>();
+        
+        services.AddScoped<IOsuApiService, OsuApiService>();
+        services.AddHttpClient<IOsuApiService, OsuApiService>();
     }
 }
 

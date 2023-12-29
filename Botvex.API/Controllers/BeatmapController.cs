@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Botvex.DB.Repositories.Beatmap.Interfaces;
 using Botvex.DB.Repositories.Beatmapset.Interfaces;
 using Botvex.DB.Repositories.User.Interfaces;
+using Botvex.osu.Services.Interfaces;
 using Microsoft.Identity.Client;
 
 namespace Botvex.osu.Controllers
@@ -15,19 +16,21 @@ namespace Botvex.osu.Controllers
         private readonly IBeatmapRepository _beatmapRepository;
         private readonly IUserRepository _userRepository;
         private readonly IBeatmapsetRepository _beatmapsetRepository;
+        private readonly IOsuApiService _osuApiService;
 
-        public BeatmapController(IBeatmapRepository beatmapRepository, IUserRepository userRepository, IBeatmapsetRepository beatmapsetRepository)
+        public BeatmapController(IBeatmapRepository beatmapRepository, IUserRepository userRepository, IBeatmapsetRepository beatmapsetRepository, IOsuApiService osuApiService)
         {
             _beatmapRepository = beatmapRepository;
             _userRepository = userRepository;
             _beatmapsetRepository = beatmapsetRepository;
+            _osuApiService = osuApiService;
         }
 
         // GET: api/Beatmap
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Beatmap>>> GetBeatmaps()
         {
-          return await _beatmapRepository.GetAll().ToListAsync();
+            return await _beatmapRepository.GetAll().ToListAsync();
         }
 
         // GET: api/Beatmap/5
@@ -53,6 +56,8 @@ namespace Botvex.osu.Controllers
             {
                 return BadRequest();
             }
+
+            await PreprocessBeatmap(beatmap);
             
             var oldBeatmap = await _beatmapRepository.GetByCondition(e => e.Id == id).FirstOrDefaultAsync();
             
@@ -75,10 +80,6 @@ namespace Botvex.osu.Controllers
                 {
                     return NotFound();
                 }
-                else
-                {
-                    throw;
-                }
             }
 
             return NoContent();
@@ -100,10 +101,6 @@ namespace Botvex.osu.Controllers
                 if (_beatmapRepository.GetSingle(e => e.Id == beatmap.Id) is null)
                 {
                     return Conflict();
-                }
-                else
-                {
-                    throw;
                 }
             }
 
@@ -138,24 +135,15 @@ namespace Botvex.osu.Controllers
         {
             var oldUser = await _userRepository.GetByCondition(e => e.Id == id).FirstOrDefaultAsync();
             
-            //Todo: replace this with a http request to osu to get the actual user.
-            var temp = new User
-            {
-                Id = 9331411,
-                Is_active = true,
-                Is_bot = false,
-                Is_deleted = false,
-                Is_online = false,
-                Is_supporter = false
-            };
+            var currentUser = await _osuApiService.GetUser(id);
             
             if (oldUser == null)
             {
-                _userRepository.Add(temp);
+                _userRepository.Add(currentUser);
             }
             else
             {
-                _userRepository.Update(temp, oldUser);
+                _userRepository.Update(currentUser, oldUser);
             }
             
             try
