@@ -10,6 +10,8 @@
 *.cache
 *.suo
 
+password.txt
+
 # Rider
 .idea/
 appsettings.Development.json
