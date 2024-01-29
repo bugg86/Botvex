@@ -20,7 +20,7 @@ public class Program
 
         var services = builder.Services;
         var configuration = builder.Configuration;
-
+        
         configuration.AddJsonFile("appsettings.json", true, true);
         
         services.AddDbContextPool<IBotvexContext, BotvexContext>(options =>
@@ -41,11 +41,11 @@ public class Program
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.
-        if (app.Environment.IsDevelopment())
-        {
+        // if (app.Environment.IsDevelopment())
+        // {
             app.UseSwagger();
             app.UseSwaggerUI();
-        }
+        // }
 
         app.UseHttpsRedirection();
 
