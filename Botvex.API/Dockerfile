@@ -6,8 +6,8 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["Botvex.API/Botvex.API.csproj", "Botvex.API/"]
-COPY ["Botvex.DB/Botvex.DB.csproj", "Botvex.DB/"]
+COPY ["Botvex.API.csproj", "Botvex.API/"]
+COPY ["../Botvex.DB/Botvex.DB.csproj", "Botvex.DB/"]
 RUN dotnet restore "Botvex.API/Botvex.API.csproj"
 COPY . .
 WORKDIR "/src/Botvex.API"
