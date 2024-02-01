@@ -1,5 +1,4 @@
-﻿using System.Net;
-using System.Net.Http.Headers;
+﻿using System.Net.Http.Headers;
 using Botvex.DB.Models;
 using Botvex.osu.Services.Interfaces;
 using Newtonsoft.Json;

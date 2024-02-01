@@ -1,11 +1,12 @@
 ﻿using Botvex.DB.Contexts.Interfaces;
 using Botvex.DB.Models;
-using Botvex.DB.Repositories.Beatmapset;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
-using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.Extensions.Configuration;
 using Convert = Botvex.DB.Models.Convert;
+using Azure.Identity;
+using Azure.Security.KeyVault.Secrets;
+using Azure.Core;
+
 
 namespace Botvex.DB.Contexts;
 
@@ -13,14 +14,22 @@ public class BotvexEnvContextFactory :IDesignTimeDbContextFactory<BotvexContext>
 {
     public BotvexContext CreateDbContext(string[] args)
     {
-        IConfiguration config = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json", optional: true)
-            .AddEnvironmentVariables()
-            .Build();
+        SecretClientOptions options = new SecretClientOptions()
+        {
+            Retry =
+            {
+                Delay= TimeSpan.FromSeconds(2),
+                MaxDelay = TimeSpan.FromSeconds(16),
+                MaxRetries = 5,
+                Mode = RetryMode.Exponential
+            }
+        };
+        var client = new SecretClient(new Uri("https://botvex-kv.vault.azure.net/"), new DefaultAzureCredential(),options);
+
+        KeyVaultSecret dbConnString = client.GetSecret("DefaultBotvexDbConnection");
 
         var optionsBuilder = new DbContextOptionsBuilder<BotvexContext>();
-        optionsBuilder.UseSqlServer(config.GetConnectionString("DefaultBotvexDbConnection"));
+        optionsBuilder.UseSqlServer(dbConnString.Value);
 
         return new BotvexContext(optionsBuilder.Options);
     }
