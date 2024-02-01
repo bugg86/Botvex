@@ -5,7 +5,6 @@ using Botvex.DB.Repositories.Beatmap.Interfaces;
 using Botvex.DB.Repositories.Beatmapset.Interfaces;
 using Botvex.DB.Repositories.User.Interfaces;
 using Botvex.osu.Services.Interfaces;
-using Microsoft.Identity.Client;
 
 namespace Botvex.osu.Controllers
 {

@@ -8,6 +8,7 @@ using Botvex.DB.Repositories.User;
 using Botvex.DB.Repositories.User.Interfaces;
 using Botvex.osu.Services;
 using Botvex.osu.Services.Interfaces;
+using Microsoft.ApplicationInsights.DependencyCollector;
 using Microsoft.EntityFrameworkCore;
 
 namespace Botvex.osu;
@@ -37,6 +38,22 @@ public class Program
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
+        
+        //Configure application insights
+        builder.Logging.AddApplicationInsights(
+            configureTelemetryConfiguration: (config) =>
+            {
+                config.ConnectionString = builder.Configuration.GetConnectionString("AIConnectionString");
+            },
+            configureApplicationInsightsLoggerOptions: (options) => { }
+        );
+
+        builder.Services.AddApplicationInsightsTelemetry();
+
+        builder.Services.ConfigureTelemetryModule<DependencyTrackingTelemetryModule>((module, options) =>
+        {
+            module.EnableSqlCommandTextInstrumentation = true;
+        });
 
         var app = builder.Build();
 
@@ -46,7 +63,7 @@ public class Program
             app.UseSwagger();
             app.UseSwaggerUI();
         // }
-
+ 
         app.UseHttpsRedirection();
 
         app.UseAuthorization();
