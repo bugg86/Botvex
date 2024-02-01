@@ -39,6 +39,7 @@ public class Program
         var client = new SecretClient(new Uri("https://botvex-kv.vault.azure.net/"), new DefaultAzureCredential(),options);
 
         KeyVaultSecret dbConnString = client.GetSecret("DefaultBotvexDbConnection");
+        KeyVaultSecret aiConnString = client.GetSecret("AIConnectionString");
         
         configuration.AddJsonFile("appsettings.json", true, true);
         
@@ -60,7 +61,7 @@ public class Program
         builder.Logging.AddApplicationInsights(
             configureTelemetryConfiguration: (config) =>
             {
-                config.ConnectionString = builder.Configuration.GetConnectionString("AIConnectionString");
+                config.ConnectionString = aiConnString.Value;
             },
             configureApplicationInsightsLoggerOptions: (options) => { }
         );
