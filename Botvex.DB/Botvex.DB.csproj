@@ -24,9 +24,6 @@
 
     <ItemGroup>
       <Folder Include="Migrations\" />
-      <Folder Include="Models\Beatmapset\" />
-      <Folder Include="Models\Beatmap\" />
-      <Folder Include="Models\User\" />
     </ItemGroup>
 
 </Project>
